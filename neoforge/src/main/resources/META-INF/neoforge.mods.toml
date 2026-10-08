@@ -1,0 +1,33 @@
+modLoader="javafml"
+loaderVersion="[4,)"
+license="MIT"
+[[mods]]
+modId="withoutyo"
+version="${version}"
+displayName="Without Ё patch"
+authors="DanilaMint"
+description="Treats Russian 'ё' as 'е' in Minecraft and JEI creative search."
+
+# Minecraft обязательно
+[[dependencies.withoutyo]]
+    modId="minecraft"
+    type="required"
+    versionRange="[1.21,)"
+    ordering="NONE"
+    side="BOTH"
+
+# JEI — soft dependency
+[[dependencies.withoutyo]]
+    modId="jei"
+    type="optional"
+    versionRange="*"
+    ordering="AFTER"
+    side="CLIENT"
+
+# Регистрация Mixin-конфигов. Без [[mixins]] Mixin-loader не находит
+# mixin.json в classpath и все Mixin'ы молча игнорируются.
+[[mixins]]
+    config="withoutyo.mixins.json"
+
+[[mixins]]
+    config="withoutyo.jei.mixins.json"

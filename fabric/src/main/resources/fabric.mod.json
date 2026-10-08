@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "id": "withoutyo",
+  "version": "${version}",
+  "name": "Without Ё patch",
+  "description": "Treats Russian 'ё' as 'е' in Minecraft and JEI creative search.",
+  "authors": ["DanilaMint"],
+  "contact": {},
+  "license": "MIT",
+  "icon": "assets/withoutyo/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "client": ["ru.withoutyo.fabric.WithoutYoFabric::onInitializeClient"]
+  },
+  "mixins": [
+    "withoutyo.mixins.json",
+    "withoutyo.jei.mixins.json"
+  ],
+  "depends": {
+    "minecraft": ">=1.20.1"
+  }
+}

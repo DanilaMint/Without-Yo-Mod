@@ -1,0 +1,25 @@
+// Корневой build.gradle — агрегатор. Никакой реальной сборки здесь не происходит.
+// Каждый loader-проект (fabric/, forge/, neoforge/) сам определяет свою версию Java
+// и зависимости — разные версии MC требуют разные JDK.
+
+plugins {
+    id 'base'
+}
+
+allprojects {
+    group = 'ru.withoutyo'
+    version = '1.0.0'
+
+    repositories {
+        maven { url = 'https://maven.fabricmc.net/' }
+        maven { url = 'https://maven.shedaniel.me/' }   // JEI публикует здесь
+        maven { url = 'https://maven.minecraftforge.net/' }
+        maven { url = 'https://maven.neoforged.net/releases' }
+        mavenCentral()
+        maven { url = 'https://jitpack.io' }
+    }
+}
+
+// Опции Mixin AnnotationProcessor — должны совпадать с тем, что генерирует refmap.
+// По умолчанию Mixin использует refmap.json в resources/.
+// Каждый subproject сам генерирует свой refmap через свой mixin config.

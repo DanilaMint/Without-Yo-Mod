@@ -1,0 +1,18 @@
+{
+  "required": true,
+  "package": "ru.withoutyo.mixin.jei",
+  "compatibilityLevel": "JAVA_17",
+  "plugin": "ru.withoutyo.mixin.OptionalJeiMixinPlugin",
+  "client": [
+    "JeiSearchMixin",
+    "LimitedStringStorageMixin"
+  ],
+  "refmap": "withoutyo.refmap.json",
+  "injectors": {
+    "maxShiftBy": 2
+  },
+  "overwrites": {
+    "requireAnnotations": true
+  },
+  "minVersion": "0.8"
+}

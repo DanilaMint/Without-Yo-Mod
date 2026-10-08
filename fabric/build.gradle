@@ -1,0 +1,50 @@
+// fabric/ — клиентский мод для Fabric Loader (Minecraft 1.20.1 — 1.21.x).
+// fabric-loom подключается через plugins{} синтаксис (см. pluginManagement в settings.gradle).
+
+plugins {
+    id 'java-library'
+    id 'fabric-loom' version '1.7-SNAPSHOT'
+}
+
+version = mod_version
+group = maven_group
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+sourceSets {
+    main {
+        java.srcDirs += '../common/src/main/java'
+        resources.srcDirs += '../common/src/main/resources'
+    }
+}
+
+dependencies {
+    minecraft "com.mojang:minecraft:${minecraft_version}"
+    mappings "net.fabricmc:yarn:${yarn_mappings}:v2"
+    modImplementation "net.fabricmc:fabric-loader:${loader_version}"
+    modImplementation "net.fabricmc.fabric-api:fabric-api:${fabric_version}"
+
+    annotationProcessor 'org.spongepowered:mixin:0.15.6+mixin.0.8.5:processor'
+    implementation 'org.spongepowered:mixin:0.15.6+mixin.0.8.5'
+
+    // JEI как compileOnly — нужен для компиляции Mixin-кода в common/,
+    // но опциональный Mixin-плагин не требует JEI в runtime.
+    compileOnly "mezz.jei:jei-${minecraft_version}-fabric:${jei_version}"
+}
+
+repositories {
+    maven { url = 'https://maven.blamejared.com' }
+}
+
+// fabric-loom создаёт jar-таск; настраиваем имя
+tasks.named('jar') {
+    archiveBaseName = 'withoutyo'
+    archiveVersion = "${minecraft_version}-fabric"
+    archiveClassifier = "${project.mod_version}"
+    from(sourceSets.main.output) {
+        include 'withoutyo.refmap.json'
+    }
+}

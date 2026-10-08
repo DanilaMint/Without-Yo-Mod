@@ -1,0 +1,31 @@
+# Gradle
+.gradle/
+build/
+out/
+*.iml
+.idea/
+.vscode/
+.classpath
+.project
+.settings/
+bin/
+gen/
+
+# Объединённые исходники
+.flattenedRoot/
+
+# Скомпилированные артефакты
+*.jar
+!gradle/wrapper/gradle-wrapper.jar
+!fabric/build/libs/*.jar
+!forge/build/libs/*.jar
+!neoforge/build/libs/*.jar
+!common/build/libs/*.jar
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Логи и прочее
+*.log
+logs/

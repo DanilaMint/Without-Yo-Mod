@@ -1,0 +1,17 @@
+{
+  "required": true,
+  "package": "ru.withoutyo.mixin.vanilla",
+  "compatibilityLevel": "JAVA_17",
+  "client": [
+    "VanillaSearchMixin",
+    "SuffixArrayMixin"
+  ],
+  "injectors": {
+    "maxShiftBy": 2
+  },
+  "overwrites": {
+    "requireAnnotations": true
+  },
+  "minVersion": "0.8",
+  "refmap": "withoutyo.refmap.json"
+}

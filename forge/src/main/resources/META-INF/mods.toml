@@ -1,0 +1,45 @@
+# Forge mods.toml для Minecraft 1.20.1 (ForgeGradle 5/6, Mojang mappings).
+# Файл обязателен — без него Forge не зарегистрирует мод.
+
+modLoader="lowcodefml"
+loaderVersion="[46,)"
+license="MIT"
+[[mods]]
+modId="withoutyo"
+version="${version}"
+displayName="Without Ё patch"
+authors="DanilaMint"
+description="Treats Russian 'ё' as 'е' in Minecraft and JEI creative search."
+
+# Forge обязательно требует Minecraft — без него мод не загрузится.
+[[dependencies.withoutyo]]
+    modId="minecraft"
+    type="required"
+    versionRange="[1.20.1,)"
+    ordering="NONE"
+    side="BOTH"
+
+# MixinLoader — для загрузки Mixin'ов через unified Mixin config Forge.
+[[dependencies.withoutyo]]
+    modId="mixinloader"
+    type="optional"
+    versionRange="*"
+    ordering="AFTER"
+    side="BOTH"
+
+# JEI — soft dependency: мод не падает, если JEI нет, но поиск JEI
+# расширяется нормализацией «ё»→«е», когда JEI присутствует.
+[[dependencies.withoutyo]]
+    modId="jei"
+    type="optional"
+    versionRange="*"
+    ordering="AFTER"
+    side="CLIENT"
+
+# Регистрация Mixin-конфигов. Без [[mixins]] Forge/Mixin-loader не находит
+# mixin.json в classpath и все Mixin'ы молча игнорируются.
+[[mixins]]
+    config="withoutyo.mixins.json"
+
+[[mixins]]
+    config="withoutyo.jei.mixins.json"

@@ -1,0 +1,77 @@
+// neoforge/ — клиентский мод для NeoForge (Minecraft 1.21.x).
+// Использует buildscript-синтаксис для classpath-загрузки NeoGradle moddev plugin.
+
+buildscript {
+    repositories {
+        maven { url = 'https://maven.neoforged.net/releases' }
+        maven { url = 'https://maven.blamejared.com' }
+    }
+    dependencies {
+        classpath "net.neoforged:moddev-gradle:${neogradle_version}"
+    }
+}
+
+plugins {
+    id 'java-library'
+}
+apply plugin: 'net.neoforged.moddev'
+
+version = mod_version
+group = maven_group
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
+}
+
+sourceSets {
+    main {
+        java.srcDirs += '../common/src/main/java'
+        resources.srcDirs += '../common/src/main/resources'
+    }
+}
+
+dependencies {
+    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
+    implementation 'org.spongepowered:mixin:0.8.5'
+
+    // JEI как compileOnly для Mixin'а в common/
+    compileOnly "mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}"
+}
+
+repositories {
+    maven { url = 'https://maven.blamejared.com' }
+}
+
+// NeoGradle-специфичная настройка: указываем версию MC + NeoForge для загрузки
+neoForge {
+    version = neoforge_version
+}
+
+// Подставляем ${version} → project.version в neoforge.mods.toml.
+// Без этого NeoForge получает литеральную строку "${version}" и валится
+// на ModInfo.<init> с InvalidModFileException: Illegal version number.
+processResources {
+    filesMatching('META-INF/neoforge.mods.toml') {
+        expand version: project.version
+    }
+}
+
+jar {
+    archiveBaseName = 'withoutyo'
+    archiveVersion = "${minecraft_version}-neoforge"
+    archiveClassifier = "${project.mod_version}"
+    manifest {
+        attributes([
+            'Specification-Title'   : 'Without Yo patch',
+            'Specification-Vendor'  : 'DanilaMint',
+            'Specification-Version' : '1',
+            'Implementation-Title'  : 'withoutyo',
+            'Implementation-Version': project.mod_version,
+            'Implementation-Vendor' : 'DanilaMint'
+        ])
+    }
+    from(sourceSets.main.output) {
+        include 'withoutyo.refmap.json'
+    }
+}

@@ -1,0 +1,78 @@
+// forge/ — клиентский мод для Forge (Minecraft 1.20.1, Forge 47.3.0).
+// Использует buildscript-синтаксис для classpath-загрузки ForgeGradle.
+
+buildscript {
+    repositories {
+        maven { url = 'https://maven.minecraftforge.net/' }
+        maven { url = 'https://maven.fabricmc.net/' }
+    }
+    dependencies {
+        classpath "net.minecraftforge.gradle:ForgeGradle:${forgegradle_version}"
+    }
+}
+
+plugins {
+    id 'java-library'
+}
+apply plugin: 'net.minecraftforge.gradle'
+
+version = mod_version
+group = maven_group
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+sourceSets {
+    main {
+        java.srcDirs += '../common/src/main/java'
+        resources.srcDirs += '../common/src/main/resources'
+    }
+}
+
+println "Java: ${System.getProperty 'java.version'}, JVM: ${System.getProperty 'java.vm.version'} (${System.getProperty 'java.home'})"
+
+minecraft {
+    mappings channel: 'official', version: '1.20.1'
+
+    accessTransformer file('src/main/resources/META-INF/accesstransformer.cfg')
+}
+
+dependencies {
+    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
+    implementation 'org.spongepowered:mixin:0.8.5'
+
+    // JEI как compileOnly — нужен только для компиляции Mixin-кода в common/
+    compileOnly "mezz.jei:jei-${minecraft_version}-common-api:${jei_version}"
+}
+
+jar {
+    archiveBaseName = 'withoutyo'
+    archiveVersion = "${minecraft_version}-forge"
+    archiveClassifier = "${project.mod_version}"
+    manifest {
+        attributes([
+            'Specification-Title'   : 'Without Yo patch',
+            'Specification-Vendor'  : 'DanilaMint',
+            'Specification-Version' : '1',
+            'Implementation-Title'  : 'withoutyo',
+            'Implementation-Version': project.mod_version,
+            'Implementation-Vendor' : 'DanilaMint'
+        ])
+    }
+    from(sourceSets.main.output) {
+        include 'withoutyo.refmap.json'
+    }
+}
+
+publishing {
+    publications {
+        register('mavenJava', MavenPublication) {
+            artifact jar
+        }
+    }
+    repositories {
+        maven { url "file://${project.projectDir}/repo" }
+    }
+}
