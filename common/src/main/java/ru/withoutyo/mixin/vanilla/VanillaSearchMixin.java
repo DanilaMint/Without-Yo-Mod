@@ -14,7 +14,7 @@ import ru.withoutyo.RussianTextNormalizer;
  * {@link CreativeModeInventoryScreen#refreshSearchResults()} и подменяет строку
  * нормализованной формой запроса. Эта первая половина нормализации делает так,
  * чтобы запрос «чёрная» находил «чёрная шерсть»; вторая (нормализация индекса)
- * живёт в {@code CreativeModeTabMixin}.
+ * живёт в {@code SuffixArrayMixin}.
  *
  * <p>Используются имена, одинаковые в Yarn (Fabric) и Mojang (Forge/NeoForge)
  * маппингах: {@code CreativeModeInventoryScreen}, {@code refreshSearchResults},

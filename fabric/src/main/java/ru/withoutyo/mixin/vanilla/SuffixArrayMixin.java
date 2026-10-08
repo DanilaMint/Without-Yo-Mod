@@ -43,8 +43,7 @@ public abstract class SuffixArrayMixin<T> {
 
     @ModifyVariable(method = "findAll(Ljava/lang/String;)Ljava/util/List;",
                    at = @At("HEAD"),
-                   argsOnly = true,
-                   index = 0,
+                   index = 1,
                    remap = false)
     private String withoutyoNormalizeQuery(String query) {
         return RussianTextNormalizer.normalize(query);
