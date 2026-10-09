@@ -39,6 +39,15 @@ dependencies {
     compileOnly "mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}"
 }
 
+// Mixin 0.8.5 AP пишет refmap в build/classes/java/main/. Без явного outRefMapFile
+// Mixin использует имя mixin.refmap.json, которое никто не подхватывает — отсюда
+// отсутствие withoutyo.refmap.json в jar и тихий отказ Mixin-loader'а.
+tasks.withType(JavaCompile).configureEach {
+    options.compilerArgs += [
+        "-AoutRefMapFile=withoutyo.refmap.json",
+    ]
+}
+
 repositories {
     maven { url = 'https://maven.blamejared.com' }
 }
@@ -70,8 +79,5 @@ jar {
             'Implementation-Version': project.mod_version,
             'Implementation-Vendor' : 'DanilaMint'
         ])
-    }
-    from(sourceSets.main.output) {
-        include 'withoutyo.refmap.json'
     }
 }

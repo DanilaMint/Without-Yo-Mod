@@ -32,3 +32,10 @@ logs/
 
 # Локальные скрипты
 install.sh
+
+# Случайные распаковки JEI и прочий dev-мусор из корня проекта
+/mezz/
+/META-INF/
+/pack.mcmeta
+/jei-icon.png
+/assets/jei/

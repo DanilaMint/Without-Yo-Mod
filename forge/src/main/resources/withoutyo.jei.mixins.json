@@ -5,7 +5,9 @@
   "plugin": "ru.withoutyo.mixin.OptionalJeiMixinPlugin",
   "client": [
     "JeiSearchMixin",
-    "LimitedStringStorageMixin"
+    "LimitedStringStorageMixin",
+    "BakedSubstringIndexSearchStorageMixin",
+    "BakedSubstringIndexBuilderMixin"
   ],
   "injectors": {
     "maxShiftBy": 2

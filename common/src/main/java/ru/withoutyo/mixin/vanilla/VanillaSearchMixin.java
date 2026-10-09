@@ -33,6 +33,6 @@ public abstract class VanillaSearchMixin {
         )
     )
     private String withoutyoNormalizeQuery(EditBox box) {
-        return RussianTextNormalizer.normalize(box.getValue());
+        return RussianTextNormalizer.normalize(box.getValue(), "vanilla-editbox");
     }
 }

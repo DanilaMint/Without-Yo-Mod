@@ -37,7 +37,7 @@ public abstract class SuffixArrayMixin<T> {
                    index = 1,
                    remap = false)
     private String withoutyoNormalizeIndexedString(String text) {
-        return RussianTextNormalizer.normalize(text);
+        return RussianTextNormalizer.normalize(text, "vanilla-suffix-add");
     }
 
     @ModifyVariable(method = "findAll(Ljava/lang/String;)Ljava/util/List;",
@@ -45,6 +45,6 @@ public abstract class SuffixArrayMixin<T> {
                    index = 1,
                    remap = false)
     private String withoutyoNormalizeQuery(String query) {
-        return RussianTextNormalizer.normalize(query);
+        return RussianTextNormalizer.normalize(query, "vanilla-suffix-search");
     }
 }

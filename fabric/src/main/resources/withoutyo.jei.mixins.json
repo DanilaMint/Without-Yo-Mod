@@ -5,7 +5,9 @@
   "plugin": "ru.withoutyo.mixin.OptionalJeiMixinPlugin",
   "client": [
     "JeiSearchMixin",
-    "LimitedStringStorageMixin"
+    "LimitedStringStorageMixin",
+    "BakedSubstringIndexSearchStorageMixin",
+    "BakedSubstringIndexBuilderMixin"
   ],
   "refmap": "withoutyo.refmap.json",
   "injectors": {

@@ -1,6 +1,5 @@
 package ru.withoutyo;
 
-import java.util.concurrent.atomic.AtomicBoolean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,21 +16,28 @@ import org.slf4j.LoggerFactory;
 public final class RussianTextNormalizer {
 
     private static final Logger LOGGER = LoggerFactory.getLogger("withoutyo");
-    private static final AtomicBoolean FIRST_CALL_LOGGED = new AtomicBoolean(false);
 
     private RussianTextNormalizer() {}
 
     /**
      * @param s исходная строка (может быть null)
+     * @param source тег источника вызова (например, "vanilla-editbox", "jei-lss-get"),
+     *               используется в логах диагностики Mixin-подмешивания.
      * @return нормализованная строка; null если на входе null; тот же экземпляр,
      *         если в строке не было «ё»/«Ё».
      */
-    public static String normalize(String s) {
+    public static String normalize(String s, String source) {
         if (s == null) return null;
-        if (FIRST_CALL_LOGGED.compareAndSet(false, true)) {
-            LOGGER.info("[withoutyo] RussianTextNormalizer.normalize invoked — Mixin is active (first arg: \"{}\")", s);
+        String result = normalizeInternal(s);
+        if (result != s) {
+            LOGGER.info("[withoutyo][{}] '{}' -> '{}'", source, s, result);
+        } else {
+            LOGGER.info("[withoutyo][{}] '{}' (no change)", source, s);
         }
-        // Ранний выход: если ё/Ё нет в строке, возвращаем тот же объект как есть.
+        return result;
+    }
+
+    private static String normalizeInternal(String s) {
         if (s.indexOf('ё') < 0 && s.indexOf('Ё') < 0) return s;
 
         StringBuilder b = new StringBuilder(s.length());
